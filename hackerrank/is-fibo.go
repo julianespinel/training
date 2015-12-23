@@ -36,6 +36,9 @@ func isFibonacciNumber(number int) bool {
 }
 
 func main() {
+
+	// https://www.hackerrank.com/challenges/is-fibo
+
 	// testCases := getTestCases();
 	testCases := []int{5,7,8}
 	for _, element := range testCases {
