@@ -1,2 +1,2 @@
-# trainning
+# training
 Programming problems
