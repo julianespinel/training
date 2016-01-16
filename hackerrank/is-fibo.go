@@ -1,3 +1,4 @@
+// https://www.hackerrank.com/challenges/is-fibo
 package main
 
 import "fmt"
@@ -43,7 +44,6 @@ func isFibonacciNumber(number float64) bool {
 
 func main() {
 
-	// https://www.hackerrank.com/challenges/is-fibo	
 	testCases := getTestCases()
 	// testCases := []float64{7778742049}
 	// testCases := []float64{5,7,8}
