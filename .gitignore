@@ -25,3 +25,6 @@ _testmain.go
 
 # Input test files
 *.in
+
+# Ignore binaries
+hackerrank/hackerrank
