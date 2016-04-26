@@ -102,3 +102,8 @@ target/
 
 # Vim Python
 **/.ropeproject/
+
+# IntelliJ
+.idea/
+out/
+training.iml
