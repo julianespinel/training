@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// https://www.hackerrank.com/challenges/sparse-arrays
 public class SparseArrays {
 
     private static int readNumber(BufferedReader reader) throws IOException {
