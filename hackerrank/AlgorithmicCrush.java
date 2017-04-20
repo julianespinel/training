@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 // https://www.hackerrank.com/challenges/crush
 public class AlgorithmicCrush {
@@ -16,10 +14,10 @@ public class AlgorithmicCrush {
         return listSize;
     }
 
-    private static List<Long> initializeArray(int listSize) {
-        List<Long> numbers = new ArrayList<>(listSize);
+    private static long[] initializeArray(int listSize) {
+        long[] numbers = new long[listSize];
         for (int i = 0; i < listSize; i++) {
-            numbers.add(ZERO);
+            numbers[i] = ZERO;
         }
         return numbers;
     }
@@ -62,16 +60,16 @@ public class AlgorithmicCrush {
         return new Operation(initialIndex, finalIndex, k);
     }
 
-    private List<Long> applyOperation(List<Long> numbers, Operation operation) {
+    private long[] applyOperation(long[] numbers, Operation operation) {
         for (int i = operation.initialIndex; i <= operation.finalIndex; i++) {
-            Long currentNumber = numbers.get(i);
+            long currentNumber = numbers[i];
             long updatedNumber = currentNumber + operation.getK();
-            numbers.set(i, updatedNumber);
+            numbers[i] = updatedNumber;
         }
         return numbers;
     }
 
-    private List<Long> processOperations(BufferedReader reader, int operations, List<Long> numbers) throws IOException {
+    private long[] processOperations(BufferedReader reader, int operations, long[] numbers) throws IOException {
         for (int i = 0; i < operations; i++) {
             String line = reader.readLine();
             Operation operation = getOperation(line);
@@ -80,7 +78,7 @@ public class AlgorithmicCrush {
         return numbers;
     }
 
-    private static void printMax(List<Long> numbers) {
+    private static void printMax(long[] numbers) {
         long max = 0;
         for (Long number : numbers) {
             max = number > max? number : max;
@@ -93,7 +91,7 @@ public class AlgorithmicCrush {
             AlgorithmicCrush main = new AlgorithmicCrush();
             String line = reader.readLine();
             int listSize = getListSize(line);
-            List<Long> numbers = initializeArray(listSize);
+            long[] numbers = initializeArray(listSize);
             int operations = getOperationsNumber(line);
             numbers = main.processOperations(reader, operations, numbers);
             printMax(numbers);
@@ -102,3 +100,4 @@ public class AlgorithmicCrush {
         }
     }
 }
+
