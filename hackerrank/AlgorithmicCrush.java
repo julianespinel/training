@@ -60,20 +60,19 @@ public class AlgorithmicCrush {
         return new Operation(initialIndex, finalIndex, k);
     }
 
-    private long[] applyOperation(long[] numbers, Operation operation) {
+    private void applyOperation(long[] numbers, Operation operation) {
         for (int i = operation.initialIndex; i <= operation.finalIndex; i++) {
             long currentNumber = numbers[i];
             long updatedNumber = currentNumber + operation.getK();
             numbers[i] = updatedNumber;
         }
-        return numbers;
     }
 
     private long[] processOperations(BufferedReader reader, int operations, long[] numbers) throws IOException {
         for (int i = 0; i < operations; i++) {
             String line = reader.readLine();
             Operation operation = getOperation(line);
-            numbers = applyOperation(numbers, operation);
+            applyOperation(numbers, operation);
         }
         return numbers;
     }
@@ -90,10 +89,10 @@ public class AlgorithmicCrush {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             AlgorithmicCrush main = new AlgorithmicCrush();
             String line = reader.readLine();
+            int operations = getOperationsNumber(line);
             int listSize = getListSize(line);
             long[] numbers = initializeArray(listSize);
-            int operations = getOperationsNumber(line);
-            numbers = main.processOperations(reader, operations, numbers);
+            main.processOperations(reader, operations, numbers);
             printMax(numbers);
         } catch (IOException e) {
             e.printStackTrace();
