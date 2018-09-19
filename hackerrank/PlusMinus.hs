@@ -1,11 +1,12 @@
 -- https://www.hackerrank.com/challenges/plus-minus/problem
+import Control.Exception.Base
 
 readInputList :: IO([Int])
 readInputList = do
   listSize <- readLn :: IO Int
   line <- getLine
   let inputList = map (read :: String -> Int) $ words line
-  return inputList
+  assert (listSize == length inputList) (return inputList)
 
 getNumbers :: [Int] -> [Int]
 getNumbers inputList =
