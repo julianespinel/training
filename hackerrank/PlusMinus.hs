@@ -14,14 +14,12 @@ getNumbers inputList =
       zeros = filter (==0) inputList
       negatives = filter (<0) inputList
    in map length $ positives:negatives:zeros:[]
-  -- let functions = [<0, ==0, >0]
-  -- zipWith functions inputList
 
 ratio :: Int -> Int -> Double
 ratio listSize number = fromIntegral(number) / fromIntegral(listSize)
 
 main = do
   inputList <- readInputList
-  let numbers = getNumbers(inputList) -- numbers = positives:zeros:negatives
+  let numbers = getNumbers(inputList)
   let results = map (ratio (length inputList)) numbers
   mapM_ print results
