@@ -10,10 +10,10 @@ readInputList = do
 
 getNumbers :: [Int] -> [Int]
 getNumbers inputList =
-  let positives = filter (<0) inputList
+  let positives = filter (>0) inputList
       zeros = filter (==0) inputList
-      negatives = filter (>0) inputList
-   in map length $ positives:zeros:negatives:[]
+      negatives = filter (<0) inputList
+   in map length $ positives:negatives:zeros:[]
   -- let functions = [<0, ==0, >0]
   -- zipWith functions inputList
 
