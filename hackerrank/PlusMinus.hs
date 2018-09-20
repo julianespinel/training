@@ -1,5 +1,6 @@
 -- https://www.hackerrank.com/challenges/plus-minus/problem
-import Control.Exception.Base
+import Control.Exception.Base(assert)
+import Text.Printf(printf)
 
 readInputList :: IO([Int])
 readInputList = do
@@ -22,4 +23,4 @@ main = do
   inputList <- readInputList
   let numbers = getNumbers(inputList)
   let results = map (ratio (length inputList)) numbers
-  mapM_ print results
+  mapM_ (printf "%.6f\n") results
