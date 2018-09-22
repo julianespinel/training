@@ -2,13 +2,10 @@
 import Control.Monad(replicateM)
 import Data.List.Split(splitOn)
 
-nestedMap :: (a -> b) -> [[a]] -> [[b]]
-nestedMap = map . map
-
 getIntSquareMatrix :: Int -> IO([[Int]])
 getIntSquareMatrix rows = do
   matrix <- replicateM rows getLine
-  let intMatrix = nestedMap read $ map words matrix
+  let intMatrix = (map . map) read $ map words matrix
   return intMatrix
 
 getDiagonals :: [[Int]] -> ([Int], [Int])
