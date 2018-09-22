@@ -11,15 +11,12 @@ getIntSquareMatrix rows = do
   let intMatrix = nestedMap read $ map words matrix
   return intMatrix
 
-getListElement :: Int -> [Int] -> Int
-getListElement rowIndex row = row !! rowIndex
-
 getDiagonals :: [[Int]] -> ([Int], [Int])
 getDiagonals matrix =
   let size = length(matrix) - 1
       indices = [0..size]
-      antiDiagonal = zipWith getListElement indices matrix
-      mainDiagonal = zipWith getListElement (reverse indices) matrix
+      antiDiagonal = zipWith (!!) matrix indices
+      mainDiagonal = zipWith (!!) matrix (reverse indices)
    in (antiDiagonal, mainDiagonal)
 
 absDiagonalDifference :: [Int] -> [Int] -> Int
