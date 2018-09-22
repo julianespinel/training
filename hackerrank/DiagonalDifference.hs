@@ -29,8 +29,7 @@ absDiagonalDifference diagonalOne diagonalTwo =
    in abs (oneSum - twoSum)
 
 main = do
-  numberString <- getLine
-  let number = read numberString :: Int
+  number <- readLn :: IO Int
   matrix <- getIntSquareMatrix number
   let (antiDiagonal, mainDiagonal) = getDiagonals(matrix)
   let result = absDiagonalDifference antiDiagonal mainDiagonal
