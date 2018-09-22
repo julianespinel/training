@@ -7,7 +7,7 @@ nestedMap = map . map
 
 getIntSquareMatrix :: Int -> IO([[Int]])
 getIntSquareMatrix rows = do
-  matrix <- replicateM (rows) getLine
+  matrix <- replicateM rows getLine
   let intMatrix = nestedMap read $ map words matrix
   return intMatrix
 
