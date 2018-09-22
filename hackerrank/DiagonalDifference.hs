@@ -4,8 +4,8 @@ import Data.List.Split(splitOn)
 
 getIntSquareMatrix :: Int -> IO([[Int]])
 getIntSquareMatrix rows = do
-  matrix <- replicateM rows getLine
-  let intMatrix = (map . map) read $ map words matrix
+  lines <- replicateM rows getLine
+  let intMatrix = (map . map) read $ map words lines
   return intMatrix
 
 getDiagonals :: [[Int]] -> ([Int], [Int])
