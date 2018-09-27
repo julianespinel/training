@@ -1,5 +1,6 @@
--- https://www.hackerrank.com/challenges/climbing-the-leaderboard/problem
+-- Problem statement: https://www.hackerrank.com/challenges/climbing-the-leaderboard/problem
 -- How to run: stack runhaskell ClimbingTheLaderboard.hs
+-- How to generate docs: stack exec -- haddock --html ClimbingTheLaderboard.hs --odir=./docs
 module Main where
 
 import Control.Exception.Base(assert)
