@@ -1,5 +1,7 @@
 -- https://www.hackerrank.com/challenges/climbing-the-leaderboard/problem
 -- How to run: stack runhaskell ClimbingTheLaderboard.hs
+module Main where
+
 import Control.Exception.Base(assert)
 import qualified Data.Set as Set
 
