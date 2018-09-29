@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class FormingAMagicSquare {
 
@@ -20,6 +22,17 @@ public class FormingAMagicSquare {
     };
 
     private static final int MAGIC_SQUARE_SUM = 45;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            int[] flatMatrix = readNumbers(ROWS, reader);
+            int minCost = convertToMagicSquareAtMinCost(flatMatrix);
+            System.out.println(minCost);
+        } catch (IOException e) {
+            reader.close();
+        }
+    }
 
     private static int[] readNumbers (int rows, BufferedReader reader) throws IOException {
         String line = "";
@@ -43,18 +56,22 @@ public class FormingAMagicSquare {
      array of all possible 3x3 magic squares.
     */
     private static int convertToMagicSquareAtMinCost(int[] flatMatrix) {
-        int sum = Arrays.stream(flatMatrix).sum();
-        return Math.abs(MAGIC_SQUARE_SUM - sum);
+        List<Integer> costs = new ArrayList<>(MAGIC_SQUARES.length);
+        for (int[] magicSquare : MAGIC_SQUARES) {
+            int cost = getMinCost(magicSquare, flatMatrix);
+            costs.add(cost);
+        }
+        return Collections.min(costs);
     }
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            int[] flatMatrix = readNumbers(ROWS, reader);
-            int minCost = convertToMagicSquareAtMinCost(flatMatrix);
-            System.out.println(minCost);
-        } catch (IOException e) {
-            reader.close();
+    private static int getMinCost(int[] magicSquare, int[] flatMatrix) {
+        int cost = 0;
+        assert magicSquare.length == flatMatrix.length;
+        for (int i = 0; i < magicSquare.length; i++) {
+            int elementOne = magicSquare[i];
+            int elementTwo = flatMatrix[i];
+            cost += Math.abs(elementOne - elementTwo);
         }
+        return cost;
     }
 }
