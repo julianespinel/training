@@ -58,13 +58,10 @@ public class FormingAMagicSquare {
      * @throws IOException Exception thrown when an IO problem happens.
      */
     public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        try {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             int[] flatMatrix = readNumbers(ROWS, reader);
             int minCost = convertToMagicSquareAtMinCost(flatMatrix);
             System.out.println(minCost);
-        } catch (IOException e) {
-            reader.close();
         }
     }
 
