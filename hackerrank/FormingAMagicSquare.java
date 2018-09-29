@@ -36,15 +36,15 @@ public class FormingAMagicSquare {
         }
     }
 
-    private static int[] readNumbers (int rows, BufferedReader reader) throws IOException {
+    private static int[] readNumbers (int lines, BufferedReader reader) throws IOException {
         String line = "";
-        for (int i = 0; i < rows; i++) {
+        for (int i = 0; i < lines; i++) {
             line += " " + reader.readLine();
         }
 
         String[] stringNumbers = line.trim().split(SPACE);
 
-        int[] numbers = new int[rows*rows];
+        int[] numbers = new int[lines*lines];
         for (int i = 0; i < stringNumbers.length; i++) {
             String stringNumber = stringNumbers[i];
             int number = Integer.parseInt(stringNumber);
