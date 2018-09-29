@@ -21,9 +21,9 @@ public class FormingAMagicSquare {
             2,7,6,9,5,1,4,3,8
     };
 
-    private static final int ELEMETS_IN_MAGIC_SQUARE = 9;
+    private static final int ELEMENTS_IN_MAGIC_SQUARE = 9;
     private static final int NUMBER_OF_MAGIC_SQUARES =
-            MAGIC_SQUARES_LINEAR.length / ELEMETS_IN_MAGIC_SQUARE;
+            MAGIC_SQUARES_LINEAR.length / ELEMENTS_IN_MAGIC_SQUARE;
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -63,7 +63,7 @@ public class FormingAMagicSquare {
         int cost = 0;
         assert magicSquares.length == flatMatrix.length * NUMBER_OF_MAGIC_SQUARES;
         for (int i = 0; i < magicSquares.length; i++) {
-            int flatMatrixIndex = i % ELEMETS_IN_MAGIC_SQUARE;
+            int flatMatrixIndex = i % ELEMENTS_IN_MAGIC_SQUARE;
             if (i > 0 && flatMatrixIndex == 0) {
                 costs.add(cost);
                 cost = 0;
