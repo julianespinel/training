@@ -28,14 +28,14 @@ public class FormingAMagicSquare {
      * Every nine elements represents a valid magic square.
      */
     private static final int[] MAGIC_SQUARES_LINEAR = new int[]{
-            8,1,6,3,5,7,4,9,2,
-            6,1,8,7,5,3,2,9,4,
-            4,9,2,3,5,7,8,1,6,
-            2,9,4,7,5,3,6,1,8,
-            8,3,4,1,5,9,6,7,2,
-            4,3,8,9,5,1,2,7,6,
-            6,7,2,1,5,9,8,3,4,
-            2,7,6,9,5,1,4,3,8
+            8, 1, 6, 3, 5, 7, 4, 9, 2,
+            6, 1, 8, 7, 5, 3, 2, 9, 4,
+            4, 9, 2, 3, 5, 7, 8, 1, 6,
+            2, 9, 4, 7, 5, 3, 6, 1, 8,
+            8, 3, 4, 1, 5, 9, 6, 7, 2,
+            4, 3, 8, 9, 5, 1, 2, 7, 6,
+            6, 7, 2, 1, 5, 9, 8, 3, 4,
+            2, 7, 6, 9, 5, 1, 4, 3, 8
     };
 
     /**
@@ -74,12 +74,12 @@ public class FormingAMagicSquare {
      *
      * Algorithm complexity: O(n)
      *
-     * @param lines The number of lines we should read from stdin.
+     * @param lines  The number of lines we should read from stdin.
      * @param reader The BufferedReader object that will read from stdin.
      * @return A one dimensional array containing all the numbers read from stdin.
      * @throws IOException Exception thrown when an IO problem happens.
      */
-    private static int[] readNumbers (int lines, BufferedReader reader) throws IOException {
+    private static int[] readNumbers(int lines, BufferedReader reader) throws IOException {
         String line = "";
         for (int i = 0; i < lines; i++) {
             line += " " + reader.readLine();
@@ -87,7 +87,7 @@ public class FormingAMagicSquare {
 
         String[] stringNumbers = line.trim().split(SPACE);
 
-        int[] numbers = new int[lines*lines];
+        int[] numbers = new int[lines * lines];
         for (int i = 0; i < stringNumbers.length; i++) {
             String stringNumber = stringNumbers[i];
             int number = Integer.parseInt(stringNumber);
@@ -116,7 +116,7 @@ public class FormingAMagicSquare {
      * Algorithm complexity: O(n)
      *
      * @param magicSquares An array containing all valid 3 x 3 magic squares.
-     * @param flatMatrix An array representing a 3 x 3 matrix.
+     * @param flatMatrix   An array representing a 3 x 3 matrix.
      * @return A list of costs.
      */
     private static List<Integer> getMinCostLinear(int[] magicSquares, int[] flatMatrix) {
