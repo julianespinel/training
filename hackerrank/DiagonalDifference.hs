@@ -18,8 +18,8 @@ getDiagonals matrix =
 
 absDiagonalDifference :: [Int] -> [Int] -> Int
 absDiagonalDifference diagonalOne diagonalTwo =
-  let oneSum = foldr (+) 0 diagonalOne
-      twoSum = foldr (+) 0 diagonalTwo
+  let oneSum = sum diagonalOne
+      twoSum = sum diagonalTwo
    in abs (oneSum - twoSum)
 
 main = do
