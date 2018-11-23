@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 // https://www.hackerrank.com/challenges/picking-numbers/problem
@@ -20,8 +20,15 @@ public class PickingNumbers {
         }
     }
 
+    /**
+     * Get frequency of every number in the given array.
+     *
+     * @param numbers An array with integer numbers.
+     * @return a map representing the frequency of each number in the given array.
+     */
     private static Map<Integer, Integer> getFrequency(int[] numbers) {
-        Map<Integer, Integer> frequency = new HashMap<>();
+        // Use linked hash map because it preserves order.
+        Map<Integer, Integer> frequency = new LinkedHashMap<>();
         for (int number : numbers) {
             Integer value = frequency.getOrDefault(number, 0);
             frequency.put(number, value + 1);
@@ -29,54 +36,27 @@ public class PickingNumbers {
         return frequency;
     }
 
-    private static int[] getMaxKeyAndNeighbours(Map<Integer, Integer> frequencies) {
-        Integer[] keys = new Integer[frequencies.keySet().size()];
-        keys = frequencies.keySet().toArray(keys);
+    private static int getMaxSubArrayLength(int[] inputNumbers) {
+        Arrays.sort(inputNumbers);
+        Map<Integer, Integer> frequencies = getFrequency(inputNumbers);
 
-        int maxKey = SENTINEL;
-        int maxFrequency = SENTINEL;
-        int previousKey = SENTINEL;
-        int nextKey = SENTINEL;
+        Integer[] numbers = new Integer[frequencies.keySet().size()];
+        numbers = frequencies.keySet().toArray(numbers);
 
-        for (int i = 0; i < keys.length; i++) {
-            int key = keys[i];
-            int frequency = frequencies.get(key);
-            if (frequency >= maxFrequency) {
-                maxKey = key;
-                maxFrequency = frequency;
-
-                int previousKeyIndex = i - 1;
-                previousKey = (previousKeyIndex >= 0) ? keys[previousKeyIndex] : SENTINEL;
-
-                int nextKeyIndex = i + 1;
-                nextKey = (nextKeyIndex < keys.length) ? keys[nextKeyIndex] : SENTINEL;
+        int globalMax = 0;
+        for (int i = 0; i < numbers.length; i++) {
+            int currentNumber = numbers[i];
+            int nextIndex = i + 1;
+            // Case when the current number is the longest subArray alone.
+            int localMax = frequencies.get(currentNumber);
+            int nextNumber = (nextIndex < numbers.length) ? numbers[nextIndex] : SENTINEL;
+            // Case when the current number is the longest subArray with another number.
+            if (Math.abs(currentNumber - nextNumber) <= 1) {
+                localMax = frequencies.get(currentNumber) + frequencies.getOrDefault(nextNumber, 0);
             }
+            globalMax = localMax > globalMax ? localMax : globalMax;
         }
-
-        return new int[]{ previousKey, maxKey, nextKey };
-    }
-
-    private static int getMaxSubArrayLength(int[] numbers) {
-        Arrays.sort(numbers);
-        Map<Integer, Integer> frequencies = getFrequency(numbers);
-        int[] previousMaxNext = getMaxKeyAndNeighbours(frequencies);
-        int previousKey = previousMaxNext[0];
-        int maxKey = previousMaxNext[1];
-        int nextKey = previousMaxNext[2];
-
-        int previousFrequency = 0;
-        if (previousKey != SENTINEL && Math.abs(previousKey - maxKey) <= 1) {
-            previousFrequency = frequencies.get(previousKey);
-        }
-
-        int nextFrequency = 0;
-        if (nextKey != SENTINEL && Math.abs(nextKey - maxKey) <= 1) {
-            nextFrequency = frequencies.get(nextKey);
-        }
-
-        int otherFrequency = Math.max(previousFrequency, nextFrequency);
-        int maxFrequency = frequencies.get(maxKey);
-        return maxFrequency + otherFrequency;
+        return globalMax;
     }
 
     public static void main(String[] args) throws IOException {
