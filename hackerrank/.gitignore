@@ -1,0 +1,5 @@
+# Ignore test cases
+*.txt
+
+# VSCode folders
+.vscode
