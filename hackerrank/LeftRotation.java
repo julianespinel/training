@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
+// https://www.hackerrank.com/challenges/ctci-array-left-rotation/problem
 public class LeftRotation {
 
   private static final String SPACE = " ";
