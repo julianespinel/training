@@ -32,11 +32,6 @@ public class TwoStrings {
     return NO;
   }
 
-  /*
-   * s1 = "hello"
-   * s2 = "ae"
-   */
-
   public static void main(String[] args) throws IOException {
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
       int cases = Integer.parseInt(reader.readLine());
