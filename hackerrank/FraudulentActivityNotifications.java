@@ -33,14 +33,12 @@ public class FraudulentActivityNotifications {
     return numbers;
   }
 
-  private static double getMedianInTrailingDays(int day, List<Integer> spendings, int trailingDays) {
-    List<Integer> spendingsInTrailingDays = spendings.subList(day - trailingDays, day);
-    List<Integer> sortedSpendingsInTrailingDays = sort(spendingsInTrailingDays);
-    int midIndex = sortedSpendingsInTrailingDays.size() / 2; // Java rounds downwards.
-    int midSpending = sortedSpendingsInTrailingDays.get(midIndex);
-    if (sortedSpendingsInTrailingDays.size() % 2 == 0) {
-      int midPlusOneSpending = sortedSpendingsInTrailingDays.get(midIndex + 1);
-      return (midSpending + midPlusOneSpending) / 2;
+  private static double getMedian(List<Integer> sortedListAscending) {
+    int midIndex = sortedListAscending.size() / 2; // Java rounds downwards.
+    int midSpending = sortedListAscending.get(midIndex);
+    if (sortedListAscending.size() % 2 == 0) {
+      int midMinusOneSpending = sortedListAscending.get(midIndex - 1);
+      return (midSpending + midMinusOneSpending) / 2.0;
     }
     return midSpending;
   }
