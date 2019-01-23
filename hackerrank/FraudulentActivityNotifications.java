@@ -52,9 +52,9 @@ public class FraudulentActivityNotifications {
   }
 
   /**
-   * The current time complexity of the implementation is O(n^2). Why?
-   * 1. I traverse the spendings list from spendings.get(trailingDays) to the end of the list.
-   * 2. In every iteration of the for loop (Step 1), I sort a subList of size equal to trailingDays.
+   * The current time complexity of the implementation is O(n * n log n). Why?
+   * 1. I traverse the spendings list from spendings.get(trailingDays) to the end of the list: O(n)
+   * 2. In every iteration of the for loop (Step 1), I sort a subList of size equal to trailingDays: O(n log n)
    */
   public static void main(String[] args) throws IOException {
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
