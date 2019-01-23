@@ -3,7 +3,9 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Collections;
+import java.util.Queue;
 import java.util.List;
 
 // https://www.hackerrank.com/challenges/fraudulent-activity-notifications/problem
@@ -80,14 +82,31 @@ public class FraudulentActivityNotifications {
       int totalDays = Integer.parseInt(split[0]);
       int trailingDays = Integer.parseInt(split[1]);
       List<Integer> spendings = getSpendings(reader);
+      Queue<Integer> queue = new ArrayDeque<>(spendings);
       if (spendings.size() != totalDays) {
-        throw new IllegalStateException("Spendings array has more elements than it should.");
+        throw new IllegalStateException("Spendings queue does not have the amount of elements it should.");
       }
+
       int notifications = 0;
+
+      List<Integer> spendingsInTrailingDays = new ArrayList<>(spendings.subList(0, trailingDays));
+      List<Integer> sortedSpendingsInTrailingDays = sort(spendingsInTrailingDays);
+
+      /* Used Integer instead of int, so list.remove(object) will remove
+       * the object rather than the index.
+       * See: https://docs.oracle.com/javase/8/docs/api/java/util/List.html#remove-java.lang.Object-
+       */
+      Integer elementToRemove = 0;
       for (int day = trailingDays; day < totalDays; day++) {
-        if (customerWasNotifiedInDay(day, spendings, trailingDays)) {
+        double median = getMedian(sortedSpendingsInTrailingDays);
+        int currentDaySpending = spendings.get(day);
+        boolean customerShouldBeNotified = currentDaySpending >= (2.0 * median);
+        if (customerShouldBeNotified) {
           notifications++;
         }
+        elementToRemove = queue.poll();
+        sortedSpendingsInTrailingDays.remove(elementToRemove);
+        sortedSpendingsInTrailingDays = addElementInOrder(sortedSpendingsInTrailingDays, currentDaySpending);
       }
       System.out.println(notifications);
     }
