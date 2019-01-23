@@ -43,10 +43,29 @@ public class FraudulentActivityNotifications {
     return midSpending;
   }
 
-  private static boolean customerWasNotifiedInDay(int day, List<Integer> spendings, int trailingDays) {
-    double median = getMedianInTrailingDays(day, spendings, trailingDays);
-    int currentDaySpending = spendings.get(day);
-    return currentDaySpending >= (2 * median);
+  private static int binarySearchIndexToInsertAt(List<Integer> sortedListAscending, int number, int insertAt) {
+    if (sortedListAscending.isEmpty()) {
+      return insertAt;
+    }
+    int size = sortedListAscending.size();
+    int midIndex = size / 2;
+    int midElement = sortedListAscending.get(midIndex);
+    if (number == midElement) {
+      return insertAt + midIndex;
+    }
+    if (number < midElement) {
+      List<Integer> lowerList = sortedListAscending.subList(0, midIndex);
+      return binarySearchIndexToInsertAt(lowerList, number, insertAt);
+    } else {
+      List<Integer> upperList = sortedListAscending.subList(midIndex + 1, size);
+      return binarySearchIndexToInsertAt(upperList, number, insertAt + midIndex + 1);
+    }
+  }
+
+  private static List<Integer> addElementInOrder(List<Integer> sortedAscending, int number) {
+    int insertAt = binarySearchIndexToInsertAt(sortedAscending, number, 0);
+    sortedAscending.add(insertAt, number);
+    return sortedAscending;
   }
 
   /**
