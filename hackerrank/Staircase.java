@@ -47,11 +47,8 @@ public class Staircase {
     StringBuilder builder = new StringBuilder();
     for (String[] row : matrix) {
       for (String cell: row) {
-        if (cell == null || cell.isEmpty()) {
-          builder.append(SPACE);
-        } else {
-          builder.append(cell);
-        }
+        cell = cell != null ? cell : SPACE;
+        builder.append(cell);
       }
       builder.append(LINE_FEED);
     }
