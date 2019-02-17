@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
-
+import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.Stack;
 
@@ -37,7 +36,6 @@ public class Candies {
     stack.push(candies);
     return candies;
   }
-
   private static int getLastElement(Stack<Integer> stack) {
     return (stack.isEmpty()) ? 0 : stack.peek();
   }
@@ -91,9 +89,9 @@ public class Candies {
     stack.push(candies);
   }
 
-  private static void calculateLastCandy(int i, int[] scores, Stack<Integer> stack) {
-    int currentScore = scores[i];
-    int previousScore = scores[i - 1];
+  private static void calculateLastCandy(int index, int[] scores, Stack<Integer> stack) {
+    int currentScore = scores[index];
+    int previousScore = scores[index - 1];
     if (previousScore == currentScore) {
       calculateCandiesForDuplicatedScores(stack);
       return;
