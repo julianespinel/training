@@ -18,7 +18,7 @@ getIntSquareMatrix rows = do
 
 
 getAllCoordinates :: Int -> [(Int, Int)]
-getAllCoordinates side = LiftM2 (,) [0..side] [0..side]
+getAllCoordinates side = liftM2 (,) [0..side] [0..side]
 
 
 buildHourGlass :: [[Int]] -> (Int, Int) -> Maybe HourGlass
