@@ -35,8 +35,8 @@ buildHourGlass matrix (row, col) = do
 
 getHourGlass :: [[Int]] -> (Int, Int) -> Maybe HourGlass
 getHourGlass matrix (row, col)
-  | (row + hourGlassSide - 1) >= hourGlassSide = Nothing
-  | (col + hourGlassSide - 1) >= hourGlassSide = Nothing
+  | (row + hourGlassSide - 1) >= squareSide = Nothing
+  | (col + hourGlassSide - 1) >= squareSide = Nothing
   | otherwise = buildHourGlass matrix (row, col)
 
 
