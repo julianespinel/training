@@ -1,6 +1,7 @@
 -- https://www.hackerrank.com/challenges/2d-array/problem
 
-import Control.Monad (liftM2)
+import Control.Monad (replicateM, liftM2)
+import Data.Maybe (fromJust)
 
 data HourGlass = [Int]
 
