@@ -3,7 +3,7 @@
 import Control.Monad (replicateM, liftM2)
 import Data.Maybe (fromJust)
 
-data HourGlass = [Int]
+type HourGlass = [Int]
 
 
 squareSide = 6
