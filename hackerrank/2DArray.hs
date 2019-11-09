@@ -44,12 +44,8 @@ getHourGlasses :: [[Int]] -> [(Int, Int)] -> [Maybe HourGlass]
 getHourGlasses matrix coordinates = map (getHourGlass matrix) coordinates
 
 
-[Maybe [Int]] -> [Maybe Int]
-[m [a]] -> [m a]
-
-
-sum :: [Maybe HourGlass] -> [Maybe Int]
-sum hourGlasses = 
+sumHourGlasses :: [Maybe HourGlass] -> [Maybe Int]
+sumHourGlasses hourGlasses = (map . fmap . foldr1) (+) hourGlasses
 
 
 main = do
