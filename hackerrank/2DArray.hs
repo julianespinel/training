@@ -12,7 +12,7 @@ hourGlassSide = 3
 
 getIntSquareMatrix :: Int -> IO([[Int]])
 getIntSquareMatrix rows = do
-  lines <- replicateM rows squareSide
+  lines <- replicateM rows getLine
   let intMatrix = (map . map) read $ map words lines
   return intMatrix
 
