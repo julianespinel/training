@@ -23,14 +23,14 @@ getAllCoordinates side = liftM2 (,) [0..side] [0..side]
 
 buildHourGlass :: [[Int]] -> (Int, Int) -> Maybe HourGlass
 buildHourGlass matrix (row, col) = do
-  HourGlass [ matrix !! row !! col
-            , matrix !! row !! col + 1
-            , matrix !! row !! col + 2
-            , matrix !! row + 1 !! col + 1
-            , matrix !! row + 2 !! col
-            , matrix !! row + 2 !! col + 1
-            , matrix !! row + 2 !! col + 2
-            ]
+  Just $ [ matrix !! row !! col
+         , matrix !! row !! (col + 1)
+         , matrix !! row !! (col + 2)
+         , matrix !! (row + 1) !! (col + 1)
+         , matrix !! (row + 2) !! col
+         , matrix !! (row + 2) !! (col + 1)
+         , matrix !! (row + 2) !! (col + 2)
+         ]
 
 
 getHourGlass :: [[Int]] -> (Int, Int) -> Maybe HourGlass
