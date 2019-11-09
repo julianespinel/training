@@ -40,7 +40,7 @@ getHourGlass matrix (row, col)
   | otherwise = buildHourGlass matrix (row, col)
 
 
-getHourGlasses :: [[Int]] [(Int, Int)] -> [Maybe HourGlass]
+getHourGlasses :: [[Int]] -> [(Int, Int)] -> [Maybe HourGlass]
 getHourGlasses matrix coordinates = map (getHourGlass matrix) coordinates
 
 
