@@ -49,8 +49,9 @@ sumHourGlasses hourGlasses = (map . fmap . foldr1) (+) hourGlasses
 
 
 main = do
-  matrix <- getIntSquareMatrix number
-  coordinate = getAllCoordinates squareSide
-  hourGlasses = getHourGlasses matrix coordinates
-  sums = sum hourGlasses
-  print $ max sums
+  matrix <- getIntSquareMatrix squareSide
+  let coordinates = getAllCoordinates squareSide
+      hourGlasses = getHourGlasses matrix coordinates
+      sums = sumHourGlasses hourGlasses
+  print $ fromJust(maximum sums)
+
