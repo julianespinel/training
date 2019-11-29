@@ -14,20 +14,11 @@ toCase line = do
   Case (head numbers) (last numbers)
 
 
-firstOperation :: Int -> Int
-firstOperation number = (3 * number) `div` 2
-
-
-secondOperation :: Int -> Int
-secondOperation number = number - 1
-
-
 solveWithHistory :: Case -> History Int Int -> Response
 solveWithHistory (Case source target) history
-  | source == target = YES
-  | Map.member source history = NO -- A loop has been detected
-  | source < target && even source = solveWithHistory (Case (firstOperation source) target) updatedHistory
-  | source > 1 = solveWithHistory (Case (secondOperation source) target) updatedHistory
+  | source >= target = YES -- We can always reach a lower number by doing source - 1
+  | source == 2 && target == 3 = YES -- This is an aceptional case because (3 * 2) / 2 = 3
+  | source > 3 = YES -- If source > 3 source can increase (slowly) until reaching the target
   | otherwise = NO
   where updatedHistory = Map.insert source source history
 
