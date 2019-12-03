@@ -21,8 +21,8 @@ toPairs (first:second:tail) = (first, second) : toPairs tail
 
 isSolved :: String -> Bool
 isSolved []                  = True
-isSolved (first:second:tail) = first < second && isSolved tail
-isSolved _                   = True
+isSolved [_]                 = True
+isSolved (first:second:tail) = first <= second && isSolved (second:tail)
 
 
 order :: String -> String
