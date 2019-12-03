@@ -1,5 +1,6 @@
 -- http://codeforces.com/problemset/problem/1256/D
 
+
 data Case = Case { moves  :: Int
                  , string :: String }
 
@@ -14,8 +15,8 @@ toCase (one, two) = Case { moves = getMoves one, string = two }
 
 toPairs :: [a] -> [(a,a)]
 toPairs []                  = []
+toPairs [_]                 = error "list size is odd"
 toPairs (first:second:tail) = (first, second) : toPairs tail
-toPairs _                   = error "list size is odd"
 
 
 isSolved :: String -> Bool
