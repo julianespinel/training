@@ -42,5 +42,6 @@ solve (Case moves string)
 
 main :: IO ()
 main = interact $
-  unlines . map (show . solve . toCase) .
+  unlines . map (id . solve . toCase) . -- Why id? See: https://stackoverflow.com/a/12104586/2420718
   toPairs . tail . lines
+
