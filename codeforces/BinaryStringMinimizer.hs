@@ -35,9 +35,9 @@ order string = string
 
 solve :: Case -> String
 solve (Case moves string)
-  | moves == 0 = string
   | isSolved string = string
   | moves > 0 = solve Case { moves = moves - 1, string = order string }
+  | otherwise = string
 
 
 main :: IO ()
