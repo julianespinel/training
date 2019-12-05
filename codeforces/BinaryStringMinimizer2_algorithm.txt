@@ -1,0 +1,32 @@
+k = 5
+11011010 -- n
+01234567 -- indices
+
+zeros	    index	k
+[2,5,7]	    0		5
+[0,5,7]	    1		5-2=3
+[0,2,7]	    2		-1
+
+zeros = [0,2,7]
+partialOnes = fillWith(1, zeros)
+nSize = len n
+partialSize = len partialOnes
+remaining = nSize - partialSize
+answer = partialOnes ++ (take remaining $ repeat 1)
+
+1101101011
+0123456789
+
+00000000
+
+process
+requiredMoves = 2 - index = 2
+updatedMoves = moves - requiredMoves = 5 - 2
+if -> index = 0
+
+requiredMoves = 5 - index = 4
+updatedMoves = moves - requiredMoves = 3 - 4 = -1
+if -> index - updatedMoves = 1 - (-1) = 2
+
+if updatedMoves > 0 -> index
+else index - updatedMoves -> -- negative number
