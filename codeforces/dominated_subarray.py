@@ -25,7 +25,7 @@ def updateHistory(index, number, history):
     if not minDifference or minimum < minDifference:
         history[number] = { "latestIndex": index, "minDifference": minimum }
         return
-    
+
     # Update index, preserve minDifference
     history[number] = { "latestIndex": index, "minDifference": minDifference }
 
@@ -34,13 +34,13 @@ def solve(case):
     history = {}
     for index, number in enumerate(case):
         updateHistory(index, number, history)
-    
+
     mins = []
     for value in history.values():
         minDifference = value["minDifference"]
         if minDifference:
             mins.append(minDifference)
-    
+
     if len(mins) == 0:
         return -1
 
