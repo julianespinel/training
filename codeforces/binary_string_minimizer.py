@@ -22,13 +22,8 @@ def getAllowedMoves(remainingMoves, desiredMoves):
     return desiredMoves if hasEnoughMoves else remainingMoves
 
 
-def abc(remainingMoves, desiredMoves):
-    difference = remainingMoves - desiredMoves
-    return 0 if difference >= 0 else abs(difference)
-
-
-def move(index, targetIndex, string):
-    print(f"index: {index}, ti: {targetIndex}, string: {string}")
+def move(index, allowedMoves, string):
+    targetIndex = index - allowedMoves
     return string[:targetIndex] + string[index] + string[targetIndex:index] + string[index + 1:]
 
 
@@ -39,18 +34,17 @@ def solve(case):
     for index in range(case.size):
         if  remainingMoves == 0:
             break
-        if index == 0:
-            continue
         char = string[index]
+        if index == 0:
+            if char == ZERO:
+                nextZeroIndex += 1
+            continue
         previousChar = string[index - 1]
         needToMove = char == ZERO and previousChar != ZERO
         if needToMove:
             desiredMoves = index - nextZeroIndex
             allowedMoves = getAllowedMoves(remainingMoves, desiredMoves)
-            # Calculate targetIndex using nextZeroIndex and allowedMoves
-            targetIndex = nextZeroIndex + abc(remainingMoves, desiredMoves)
-            print(f"nzi: {nextZeroIndex}, remainingmoves: {remainingMoves}, desiredmoves: {desiredMoves}")
-            string = move(index, targetIndex, string)
+            string = move(index, allowedMoves, string)
             remainingMoves -= allowedMoves
             nextZeroIndex += 1
         elif char == ZERO:
