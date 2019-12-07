@@ -13,7 +13,7 @@ def getCase():
     lineElements = input().split(SPACE)
     size = int(lineElements[0])
     moves = int(lineElements[1])
-    string = input()
+    string = list(input())
     return Case(size, moves, string)
 
 
@@ -22,9 +22,9 @@ def getAllowedMoves(remainingMoves, desiredMoves):
     return desiredMoves if hasEnoughMoves else remainingMoves
 
 
-def move(index, allowedMoves, string):
-    targetIndex = index - allowedMoves
-    return string[:targetIndex] + string[index] + string[targetIndex:index] + string[index + 1:]
+def swap(index, nextZeroIndex, string):
+    string[index], string[nextZeroIndex] = string[nextZeroIndex], string[index]
+    return string
 
 
 def solve(case):
@@ -44,7 +44,8 @@ def solve(case):
         if needToMove:
             desiredMoves = index - nextZeroIndex
             allowedMoves = getAllowedMoves(remainingMoves, desiredMoves)
-            string = move(index, allowedMoves, string)
+            targetIndex = nextZeroIndex + abs(desiredMoves - allowedMoves)
+            string = swap(index, targetIndex, string)
             remainingMoves -= allowedMoves
             nextZeroIndex += 1
         elif char == ZERO:
@@ -56,6 +57,7 @@ if __name__ == "__main__":
     number_of_cases = int(input())
     for i in range(number_of_cases):
         case = getCase()
-        solution = solve(case)
+        solvedList = solve(case)
+        solution = "".join(solvedList)
         print(solution)
 
