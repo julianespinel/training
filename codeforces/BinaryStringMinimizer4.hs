@@ -1,6 +1,8 @@
 -- http://codeforces.com/problemset/problem/1256/D
 
 import           Data.List
+import           Data.Maybe
+
 
 zero = '0'
 one = '1'
@@ -24,13 +26,19 @@ toPairs [_]                 = error "list size is odd"
 toPairs (first:second:tail) = (first, second) : toPairs tail
 
 
-calculateIndicesAfterMoves :: [Int] -> Int -> [Int] -> [Int]
-calculateIndicesAfterMoves [] moves finalIndices = finalIndices
-calculateIndicesAfterMoves (x:xs) moves finalIndices
-  | moves == 0 = finalIndices ++ (x:xs)
-  | otherwise = calculateIndicesAfterMoves xs updatedMoves (finalIndices ++ [newIndex])
-  where lastZeroIndex = if null finalIndices then 0 else (last finalIndices) + 1
-        desiredMoves = x - lastZeroIndex
+correctIndex :: Maybe Int -> Int
+correctIndex maybe
+  | isNothing maybe = 0
+  | otherwise = fromJust maybe + 1
+
+
+calculateIndicesAfterMoves :: [Int] -> Int -> Maybe Int -> [Int]
+calculateIndicesAfterMoves [] moves lastZeroIndex = []
+calculateIndicesAfterMoves (x:xs) moves lastZeroIndex
+  | moves == 0 = x:xs
+  | otherwise = newIndex : calculateIndicesAfterMoves xs updatedMoves (Just newIndex)
+  where correctedIndex = correctIndex lastZeroIndex
+        desiredMoves = x - correctedIndex
         allowedMoves = min desiredMoves moves
         updatedMoves = moves - allowedMoves
         newIndex = x - allowedMoves
@@ -46,7 +54,7 @@ buildFinalList (x:xs) index (y:ys)
 solve :: Case -> String
 solve (Case moves string) = do
   let initialZeroIndices = elemIndices zero string
-  let finalZeroIndices = calculateIndicesAfterMoves initialZeroIndices moves []
+  let finalZeroIndices = calculateIndicesAfterMoves initialZeroIndices moves Nothing
   let ones = replicate (length string) one
   buildFinalList finalZeroIndices 0 ones
 
