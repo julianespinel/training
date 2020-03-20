@@ -26,26 +26,19 @@ toPairs [_]                 = error "list size is odd"
 toPairs (first:second:tail) = (first, second) : toPairs tail
 
 
-correctIndex :: Maybe Int -> Int
-correctIndex maybe
-  | isNothing maybe = 0
-  | otherwise       = fromJust maybe + 1
-
-
-calculateIndicesAfterMoves :: [Int] -> Int -> Maybe Int -> [Int]
-calculateIndicesAfterMoves [] moves lastZeroIndex = []
+calculateIndicesAfterMoves :: [Int] -> Int -> Int -> [Int]
+calculateIndicesAfterMoves [] _ _ = []
 calculateIndicesAfterMoves initialZeros 0 _ = initialZeros
 calculateIndicesAfterMoves (initialZero:initialZeros) moves lastZeroIndex =
-  newIndex : calculateIndicesAfterMoves initialZeros updatedMoves (Just newIndex)
-  where correctedIndex = correctIndex lastZeroIndex
-        desiredMoves   = initialZero - correctedIndex
-        allowedMoves   = min desiredMoves moves
-        updatedMoves   = moves - allowedMoves
-        newIndex       = initialZero - allowedMoves
+  newZeroIndex : calculateIndicesAfterMoves initialZeros updatedMoves (lastZeroIndex + 1)
+  where desiredMoves = initialZero - lastZeroIndex
+        allowedMoves = min desiredMoves moves
+        updatedMoves = moves - allowedMoves
+        newZeroIndex = initialZero - allowedMoves
 
 
 buildFinalList :: [Int] -> Int -> String -> String
-buildFinalList [] index string = string
+buildFinalList [] index ones = ones
 buildFinalList (zero:zeros) index (one:ones)
   | zero == index = zeroChar : buildFinalList zeros (index + 1) ones
   | otherwise     = one : buildFinalList (zero:zeros) (index + 1) ones
@@ -54,7 +47,7 @@ buildFinalList (zero:zeros) index (one:ones)
 solve :: Case -> String
 solve (Case moves string) = do
   let initialZeroIndices = elemIndices zeroChar string
-  let finalZeroIndices   = calculateIndicesAfterMoves initialZeroIndices moves Nothing
+  let finalZeroIndices   = calculateIndicesAfterMoves initialZeroIndices moves 0
   let ones               = replicate (length string) oneChar
   buildFinalList finalZeroIndices 0 ones
 
