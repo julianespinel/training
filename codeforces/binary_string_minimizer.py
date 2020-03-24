@@ -5,59 +5,56 @@ class Case:
         self.string = string
 
 
-SPACE = " "
+SPACE = ' '
 ZERO = '0'
+ONE = '1'
 
 
-def getCase():
-    lineElements = input().split(SPACE)
-    size = int(lineElements[0])
-    moves = int(lineElements[1])
+def get_case():
+    line_elements = input().split(SPACE)
+    size = int(line_elements[0])
+    moves = int(line_elements[1])
     string = list(input())
     return Case(size, moves, string)
 
 
-def getAllowedMoves(remainingMoves, desiredMoves):
-    hasEnoughMoves = (remainingMoves - desiredMoves >= 0)
-    return desiredMoves if hasEnoughMoves else remainingMoves
-
-
-def swap(index, nextZeroIndex, string):
-    string[index], string[nextZeroIndex] = string[nextZeroIndex], string[index]
+def swap(index, next_zero_index, string):
+    string[index], string[next_zero_index] = string[next_zero_index], string[index]
     return string
 
 
 def solve(case):
-    nextZeroIndex = 0
-    remainingMoves = case.moves
+    next_zero_index = 0
+    remaining_moves = case.moves
     string = case.string
     for index in range(case.size):
-        if  remainingMoves == 0:
+        if remaining_moves == 0:
             break
-        char = string[index]
+
+        current_char = string[index]
         if index == 0:
-            if char == ZERO:
-                nextZeroIndex += 1
+            if current_char == ZERO:
+                next_zero_index += 1
             continue
-        previousChar = string[index - 1]
-        needToMove = char == ZERO and previousChar != ZERO
-        if needToMove:
-            desiredMoves = index - nextZeroIndex
-            allowedMoves = getAllowedMoves(remainingMoves, desiredMoves)
-            targetIndex = nextZeroIndex + abs(desiredMoves - allowedMoves)
-            string = swap(index, targetIndex, string)
-            remainingMoves -= allowedMoves
-            nextZeroIndex += 1
-        elif char == ZERO:
-            nextZeroIndex += 1
+
+        previous_char = string[index - 1]
+        need_to_move = current_char == ZERO and previous_char == ONE
+        if need_to_move:
+            desired_moves = index - next_zero_index
+            allowed_moves = min(remaining_moves, desired_moves)
+            target_index = next_zero_index + abs(desired_moves - allowed_moves)
+            string = swap(index, target_index, string)
+            remaining_moves -= allowed_moves
+            next_zero_index += 1
+        elif current_char == ZERO:
+            next_zero_index += 1
     return string
 
 
 if __name__ == "__main__":
     number_of_cases = int(input())
     for i in range(number_of_cases):
-        case = getCase()
+        case = get_case()
         solvedList = solve(case)
         solution = "".join(solvedList)
         print(solution)
-
