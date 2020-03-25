@@ -1,8 +1,6 @@
 -- http://codeforces.com/problemset/problem/1256/D
 
-import           Data.List
-import           Data.Maybe
-
+import Data.List
 
 zeroChar = '0'
 oneChar = '1'
@@ -26,12 +24,12 @@ toPairs [_]                 = error "list size is odd"
 toPairs (first:second:tail) = (first, second) : toPairs tail
 
 
-calculateIndicesAfterMoves :: [Int] -> Int -> Int -> [Int]
+calculateIndicesAfterMoves :: [Int] -> [Int] -> Int -> [Int]
 calculateIndicesAfterMoves [] _ _ = []
-calculateIndicesAfterMoves initialZeros 0 _ = initialZeros
-calculateIndicesAfterMoves (initialZero:initialZeros) moves lastZeroIndex =
-  newZeroIndex : calculateIndicesAfterMoves initialZeros updatedMoves (lastZeroIndex + 1)
-  where desiredMoves = initialZero - lastZeroIndex
+calculateIndicesAfterMoves initialZeros _ 0 = initialZeros
+calculateIndicesAfterMoves (initialZero:initialZeros) (ideal:ideals) moves =
+  newZeroIndex : calculateIndicesAfterMoves initialZeros ideals updatedMoves
+  where desiredMoves = abs $ initialZero - ideal
         allowedMoves = min desiredMoves moves
         updatedMoves = moves - allowedMoves
         newZeroIndex = initialZero - allowedMoves
@@ -47,7 +45,8 @@ buildFinalList (zero:zeros) index (one:ones)
 solve :: Case -> String
 solve (Case moves string) = do
   let initialZeroIndices = elemIndices zeroChar string
-  let finalZeroIndices   = calculateIndicesAfterMoves initialZeroIndices moves 0
+  let ideals             = [0..(length initialZeroIndices)]
+  let finalZeroIndices   = calculateIndicesAfterMoves initialZeroIndices ideals moves
   let ones               = replicate (length string) oneChar
   buildFinalList finalZeroIndices 0 ones
 
