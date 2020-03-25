@@ -27,12 +27,12 @@ toPairs (first:second:tail) = (first, second) : toPairs tail
 calculateIndicesAfterMoves :: [Int] -> [Int] -> Int -> [Int]
 calculateIndicesAfterMoves [] _ _ = []
 calculateIndicesAfterMoves initialZeros _ 0 = initialZeros
-calculateIndicesAfterMoves (initialZero:initialZeros) (ideal:ideals) moves =
-  newZeroIndex : calculateIndicesAfterMoves initialZeros ideals updatedMoves
-  where desiredMoves = abs $ initialZero - ideal
-        allowedMoves = min desiredMoves moves
-        updatedMoves = moves - allowedMoves
-        newZeroIndex = initialZero - allowedMoves
+calculateIndicesAfterMoves (initialZero:initialZeros) (idealIndex:idealIndices) moves =
+  newZeroIndex : calculateIndicesAfterMoves initialZeros idealIndices updatedMoves
+  where desiredMoves = abs $ initialZero - idealIndex
+        allowedMoves = abs $ min desiredMoves moves
+        updatedMoves = abs $ moves - allowedMoves
+        newZeroIndex = abs $ initialZero - allowedMoves
 
 
 buildFinalList :: [Int] -> Int -> String -> String
@@ -45,8 +45,8 @@ buildFinalList (zero:zeros) index (one:ones)
 solve :: Case -> String
 solve (Case moves string) = do
   let initialZeroIndices = elemIndices zeroChar string
-  let ideals             = [0..(length initialZeroIndices)]
-  let finalZeroIndices   = calculateIndicesAfterMoves initialZeroIndices ideals moves
+  let idealIndices      = [0..(length initialZeroIndices)]
+  let finalZeroIndices   = calculateIndicesAfterMoves initialZeroIndices idealIndices moves
   let ones               = replicate (length string) oneChar
   buildFinalList finalZeroIndices 0 ones
 
