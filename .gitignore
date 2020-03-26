@@ -108,3 +108,6 @@ target/
 out/
 training.iml
 hackerrank.iml
+
+# MacOS
+**/.DS_Store
