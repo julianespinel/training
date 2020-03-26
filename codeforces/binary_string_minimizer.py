@@ -1,3 +1,5 @@
+# http://codeforces.com/problemset/problem/1256/D
+
 class Case:
     def __init__(self, size, moves, string):
         self.size = size
