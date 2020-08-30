@@ -11,14 +11,19 @@ public class AngryProfessor {
     private static final String SPACE = " ";
 
     private class Case {
-        private final int totalStudents;
+
         private final int minStudentsOnTime;
         private final int[] arrivals;
 
         public Case(int totalStudents, int minStudentsOnTime, int[] arrivals) {
-            this.totalStudents = totalStudents;
             this.minStudentsOnTime = minStudentsOnTime;
             this.arrivals = arrivals;
+
+            if (totalStudents != arrivals.length) {
+                String errorMessage = String.format("Total students expected to be %s, but is %s",
+                    totalStudents, arrivals.length);
+                throw new AssertionError(errorMessage);
+            }
         }
 
         private int getStudentsOnTime() {
