@@ -17,12 +17,12 @@ public class AngryProfessor {
     private class Case {
 
         private final int totalStudents;
-        private final int minStudentsOnTime;
+        private final int cancellationThreshold;
         private final int[] arrivals;
 
-        public Case(int totalStudents, int minStudentsOnTime, int[] arrivals) {
+        public Case(int totalStudents, int cancellationThreshold, int[] arrivals) {
             this.totalStudents = totalStudents;
-            this.minStudentsOnTime = minStudentsOnTime;
+            this.cancellationThreshold = cancellationThreshold;
             this.arrivals = arrivals;
         }
 
@@ -44,7 +44,7 @@ public class AngryProfessor {
 
         private Answer isClassCancelled() {
             int studentsOnTime = countEarly();
-            return (studentsOnTime >= minStudentsOnTime) ? Answer.NO : Answer.YES;
+            return (studentsOnTime >= cancellationThreshold) ? Answer.NO : Answer.YES;
         }
 
         public Answer solve() {
@@ -56,10 +56,10 @@ public class AngryProfessor {
     private Case readCase(BufferedReader reader) throws IOException {
         String[] split = reader.readLine().split(SPACE);
         int totalStudents = Integer.parseInt(split[0]);
-        int minStudentsOnTime = Integer.parseInt(split[1]);
+        int cancellationThreshold = Integer.parseInt(split[1]);
         String[] arrivalsStr = reader.readLine().split(SPACE);
         int[] arrivals = Arrays.stream(arrivalsStr).mapToInt(Integer::parseInt).toArray();
-        return new Case(totalStudents, minStudentsOnTime, arrivals);
+        return new Case(totalStudents, cancellationThreshold, arrivals);
     }
 
     private List<Answer> solve() throws IOException {
