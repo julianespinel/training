@@ -23,8 +23,8 @@ toCase (firstLine, secondLine) = do
         threshold = firstList !! 1
         times = map read $ words secondLine :: [Int]
 
-isValid :: Case -> Case
-isValid aCase
+validate :: Case -> Case
+validate aCase
   | students == length times = aCase
   | otherwise = error errorMessage -- Break the program on erroneous input
   where students = totalStudents aCase
@@ -40,7 +40,7 @@ isClassCancelled (Case _ cancellationThreshold arrivalTimes)
   | otherwise = YES
 
 solve :: Case -> Answer
-solve = isClassCancelled . isValid
+solve = isClassCancelled . validate
 
 main =
   interact $                    -- Reads an input, prints an output
