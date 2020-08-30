@@ -30,7 +30,7 @@ public class AngryProfessor {
             if (totalStudents != arrivals.length) {
                 String errorMessage = String.format("Total students expected to be %s, but is %s",
                     totalStudents, arrivals.length);
-                throw new AssertionError(errorMessage);
+                throw new AssertionError(errorMessage); // Break the program on erroneous input
             }
         }
 
