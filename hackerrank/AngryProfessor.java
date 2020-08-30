@@ -26,40 +26,31 @@ public class AngryProfessor {
             this.arrivals = arrivals;
         }
 
-        public int getTotalStudents() {
-            return totalStudents;
+        private void validate() {
+            if (totalStudents != arrivals.length) {
+                String errorMessage = String.format("Total students expected to be %s, but is %s",
+                    totalStudents, arrivals.length);
+                throw new AssertionError(errorMessage);
+            }
         }
 
-        public int getMinStudentsOnTime() {
-            return minStudentsOnTime;
+        private int countEarly() {
+            int studentsOnTime = 0;
+            for (int arrival : arrivals) {
+                studentsOnTime += (arrival <= 0) ? 1 : 0;
+            }
+            return studentsOnTime;
         }
 
-        public int[] getArrivals() {
-            return arrivals;
+        private Answer isClassCancelled() {
+            int studentsOnTime = countEarly();
+            return (studentsOnTime >= minStudentsOnTime) ? Answer.NO : Answer.YES;
         }
-    }
 
-    private void validate(Case aCase) {
-        int totalStudents = aCase.getTotalStudents();
-        int[] arrivals = aCase.getArrivals();
-        if (totalStudents != arrivals.length) {
-            String errorMessage = String.format("Total students expected to be %s, but is %s",
-                totalStudents, arrivals.length);
-            throw new AssertionError(errorMessage);
+        public Answer solve() {
+            validate();
+            return isClassCancelled();
         }
-    }
-
-    private int countEarly(Case aCase) {
-        int studentsOnTime = 0;
-        for (int arrival : aCase.getArrivals()) {
-            studentsOnTime += (arrival <= 0) ? 1 : 0;
-        }
-        return studentsOnTime;
-    }
-
-    private Answer isClassCancelled(Case aCase) {
-        int studentsOnTime = countEarly(aCase);
-        return (studentsOnTime >= aCase.getMinStudentsOnTime()) ? Answer.NO : Answer.YES;
     }
 
     private Case readCase(BufferedReader reader) throws IOException {
@@ -77,8 +68,7 @@ public class AngryProfessor {
             int totalCases = Integer.parseInt(reader.readLine());
             for (int i = 0; i < totalCases; i++) {
                 Case aCase = readCase(reader);
-                validate(aCase);
-                answers.add(isClassCancelled(aCase));
+                answers.add(aCase.solve());
             }
         }
         return answers;
