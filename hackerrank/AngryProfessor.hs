@@ -10,7 +10,7 @@ data Answer = YES | NO deriving (Show)
 
 toPairs :: [a] -> [(a, a)]
 toPairs []                  = []
-toPairs [_]                 = error "list size is odd" -- Break the program on erroneous input
+toPairs [_]                 = error "list size is odd, should be even" -- Break the program on erroneous input
 toPairs (first:second:tail) = (first, second) : toPairs tail
 
 toCase :: (String, String) -> Case
