@@ -2,11 +2,11 @@
 
 import           Text.Printf
 
+data Answer = YES | NO deriving (Show)
+
 data Case = Case { totalStudents         :: Int
                  , cancellationThreshold :: Int
-                 , arrivalTimes          :: [Int] }
-
-data Answer = YES | NO deriving (Show)
+                 , arrivals              :: [Int] }
 
 toPairs :: [a] -> [(a, a)]
 toPairs []                  = []
@@ -17,26 +17,23 @@ toCase :: (String, String) -> Case
 toCase (firstLine, secondLine) = do
   Case { totalStudents = students
        , cancellationThreshold = threshold
-       , arrivalTimes = times }
+       , arrivals = map read $ words secondLine :: [Int] }
   where firstList = map read $ words firstLine :: [Int]
         students = head firstList
         threshold = firstList !! 1
-        times = map read $ words secondLine :: [Int]
 
 validate :: Case -> Case
-validate aCase
-  | students == length times = aCase
+validate (Case students threshold arrivals)
+  | students == length arrivals = Case students threshold arrivals
   | otherwise = error errorMessage -- Break the program on erroneous input
-  where students = totalStudents aCase
-        times = arrivalTimes aCase
-        errorMessage = printf "Total students expected to be %s, but is %s" (show students) (show $ length times)
+  where errorMessage = printf "Total students expected to be %s, but is %s" (show students) (show $ length arrivals)
 
 countEarly :: [Int] -> Int
-countEarly arrivalTimes = length $ filter (<= 0) arrivalTimes
+countEarly arrivals = length $ filter (<= 0) arrivals
 
 isClassCancelled :: Case -> Answer
-isClassCancelled (Case _ cancellationThreshold arrivalTimes)
-  | countEarly arrivalTimes >= cancellationThreshold = NO
+isClassCancelled (Case _ cancellationThreshold arrivals)
+  | countEarly arrivals >= cancellationThreshold = NO
   | otherwise = YES
 
 solve :: Case -> Answer
