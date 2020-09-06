@@ -9,10 +9,12 @@ class Position:
         self.col = col
 
     def id(self):
+        """Runtime: O(row + col)"""
         return str(self.row) + str(self.col)
 
 
 class Direction(Enum):
+    """Enum for cardinal directions"""
     N = auto()
     NE = auto()
     E = auto()
@@ -22,6 +24,10 @@ class Direction(Enum):
     W = auto()
     NW = auto()
 
+
+# Functions to count steps in each cardinal direction
+# All of the 8 following fuctions have this runtime in the
+# worst case: O(side)
 
 def count_steps_north(queen, obstacles, side):
     steps = 0
@@ -132,6 +138,7 @@ def count_steps_north_west(queen, obstacles, side):
 
 
 def read_side_and_obstacles_size():
+    """Function to read the first line of the input"""
     line = input().split()
     side = int(line[0])
     obstacles_size = int(line[1])
@@ -139,6 +146,7 @@ def read_side_and_obstacles_size():
 
 
 def read_queen_position():
+    """Function to read the second line of the input"""
     line = input().split()
     row = int(line[0]) - 1 # Make it zero indexed
     col = int(line[1]) - 1 # Make it zero indexed
@@ -146,6 +154,10 @@ def read_queen_position():
 
 
 def read_obstacles(obstacles_size):
+    """
+    Function to read the second line of the input.
+    It returns a dictionary of position.id() -> Position
+    """
     obstacles_dict = {}
     for i in range(obstacles_size):
         line = input().split()
@@ -156,6 +168,8 @@ def read_obstacles(obstacles_size):
     return obstacles_dict
 
 
+# Dictonary to map cardinal direction and its respective function to
+# calculate the possible steps of th queen.
 directions_dict = {
     Direction.N: count_steps_north,
     Direction.NE: count_steps_north_east,
@@ -169,11 +183,26 @@ directions_dict = {
 
 
 def steps_in_direction(direction, queen, obstacles, side):
-    count_steps_function = directions_dict[direction]
-    return count_steps_function(queen, obstacles, side)
+    """
+    Returns the possible steps in the  given direction.
+    The runtime of this function is O(side)
+    """
+    count_steps_function = directions_dict[direction]   # O(1)
+    return count_steps_function(queen, obstacles, side) # O(side)
 
 
 def solve(side, queen, obstacles):
+    """
+    Solve the problem by counting the possible steps of the queen in each
+    direction.
+
+    The total runtime complexity is:
+    O(directions) * O(side)
+    -> directions is always 8, therefore:
+    O(8) * O(side)
+    -> Drop the constants in complexity analysis, therefore:
+    O(side)
+    """
     steps = 0
     for direction in list(Direction):
         steps += steps_in_direction(direction, queen, obstacles, side)
