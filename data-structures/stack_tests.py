@@ -1,6 +1,7 @@
 import unittest
 from stack import Stack
 
+
 class TestStringMethods(unittest.TestCase):
 
     def test_push_empty_stack(self):

@@ -11,6 +11,7 @@ class Node:
     def append(self, node):
         self.next = node
 
+
 class Stack:
 
     def __init__(self):
