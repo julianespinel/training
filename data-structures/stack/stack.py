@@ -3,11 +3,7 @@ class Node:
 
     def __init__(self, value):
         self.value = value
-        self.previous = None
         self.next = None
-
-    def prepend(self, node):
-        self.previous = node
 
     def append(self, node):
         self.next = node
