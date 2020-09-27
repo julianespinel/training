@@ -20,7 +20,7 @@ toCase (firstLine, secondLine) = do
        , arrivals = map read $ words secondLine :: [Int] }
   where firstList = map read $ words firstLine :: [Int]
         students = head firstList
-        threshold = firstList !! 1
+        threshold = last firstList
 
 validate :: Case -> Case
 validate (Case students threshold arrivals)
@@ -39,6 +39,7 @@ isClassCancelled (Case _ cancellationThreshold arrivals)
 solve :: Case -> Answer
 solve = isClassCancelled . validate
 
+main :: IO ()
 main =
   interact $                    -- Reads an input, prints an output
   unlines .                     -- Join elements with \n. Ex: unlines ["YES", "NO", "YES"] -> "YES\nNO\nYES\n"
