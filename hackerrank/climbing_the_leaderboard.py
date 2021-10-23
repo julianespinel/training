@@ -40,55 +40,39 @@ def remove_duplicates(ranks: list[int]) -> list[int]:
     return list(dict.fromkeys(ranks))
 
 
-def move_to_next_rank(index: int, ranks: deque[int], score: int) -> tuple[int, deque[int]]:
+def get_positions_per_score(ranks: list[int], scores: list[int]) -> deque[int]:
     '''
-    Remove the elements from the ranks that are < than the given score.
-    When an element is removed the index is decreased.
+    Return the position of each score in the ranks list
+    using a zero-based index.
 
-    Return the tuple (index, ranks)
-    '''
-    if not ranks:
-        return index, ranks
-
-    rank = ranks.pop()  # O(1)
-    index -= 1
-    while (ranks and score > rank):  # worst case: O(ranks)
-        rank = ranks.pop()  # O(1)
-        index -= 1
-
-    # should put back the element that ended the while
-    if not (score > rank):
-        ranks.append(rank)  # O(1)
-        index += 1
-
-    return index, ranks
-
-
-def get_positions_per_score(ranks: deque[int], scores: deque[int]) -> deque[int]:
-    '''
-    Return the position of each score in the ranks.
+    ranks: list sorted in **descending** order
+    scores: list sorted in **descending** order
 
     Time complexity: O(scores) + O(ranks)
     '''
-    positions = deque()  # why a deque? so all appends are O(1)
-    index = len(ranks) - 1  # O(1)
+    positions = deque()  # why a deque? to make all appends O(1)
+    ranks_index = 0  # O(1)
+    scores_index = 0  # O(1)
 
-    for score in scores:  # O(scores)
-        # O(ranks) in the worst case, however we guarantee that we
-        # traverse ranks only once. Therefore, this is not a nested loop
-        index, ranks = move_to_next_rank(index, ranks, score)
+    scores_size = len(scores)  # O(1)
+    ranks_size = len(ranks)  # O(1)
 
-        if not ranks:
-            positions.append(0)  # O(1)
-            continue
+    # O(scores) + O(ranks)
+    while (scores_index < scores_size) and (ranks_index < ranks_size):
+        score = scores[scores_index]  # O(1)
+        rank = ranks[ranks_index]  # O(1)
+        if score >= rank:  # O(1)
+            positions.append(ranks_index)  # O(1)
+            scores_index += 1  # O(1)
+        else:
+            ranks_index += 1  # O(1)
 
-        rank = ranks[-1]  # get last element, # O(1)
+    # add missing scores
+    while scores_index < scores_size:  # O(scores) in the worst case
+        positions.append(ranks_index)  # O(1)
+        scores_index += 1  # O(1)
 
-        if score < rank:
-            positions.append(index + 1)  # O(1)
-        elif score == rank:
-            positions.append(index)  # O(1)
-
+    positions.reverse()  # O(scores)
     return positions
 
 
@@ -105,11 +89,11 @@ def print_positions(positions: deque[int]) -> None:
 
 if __name__ == '__main__':
     ranks_input = read_values()
-    scores_input = read_values()
+    scores = read_values()
 
-    ranks_list = remove_duplicates(ranks_input)  # O(ranks)
-    ranks = deque(ranks_list)  # O(ranks)
-    scores = deque(scores_input)  # O(scores)
+    ranks = remove_duplicates(ranks_input)  # O(ranks)
+    scores.reverse()  # O(scores)
 
     positions = get_positions_per_score(ranks, scores)  # O(ranks) + O(scores)
-    print_positions(positions)  # O(positions)
+    # O(scores), because len(positions) == len(scores)
+    print_positions(positions)
