@@ -23,7 +23,7 @@ class TestTree(unittest.TestCase):
 
     def test_traverse_pre_order(self):
         root = get_test_tree()
-        recursive_result = tree.pre_order_recursive(root, [])
+        recursive_result = tree.pre_order_recursive(root)
         self.assertEqual(recursive_result, ['f', 'b', 'a', 'd', 'c', 'e', 'g', 'i', 'h'])
 
         iterative_result = tree.pre_order_iterative(root)
