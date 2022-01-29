@@ -10,19 +10,17 @@ class Node:
         self.right = right
 
 
-def pre_order_recursive(root: Node, elements: list) -> list:
+def pre_order_recursive(root: Node) -> list:
     """
     Returns the elements of the tree traversed pre-order (NLR)
     :param root: The root of the tree
-    :param elements: List to accumulate the result
     :return: List with the nodes of the tree in pre-order
     """
-    elements.append(root.value)
-    if root.left:
-        elements = pre_order_recursive(root.left, elements)
-    if root.right:
-        elements = pre_order_recursive(root.right, elements)
-
+    if not root:
+        return []
+    elements = [root.value]
+    elements.extend(pre_order_recursive(root.left))
+    elements.extend(pre_order_recursive(root.right))
     return elements
 
 
