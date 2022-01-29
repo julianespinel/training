@@ -76,19 +76,26 @@ def post_order(root: Node) -> list:
     return elements
 
 
-def breadth_first_recursive(root: Node) -> list:
+def breadth_first_recursive(root: Node, queue: Deque[Node] = deque()) -> list:
     """
     Returns the elements of the tree traversed in breadth-first order.
     The implementation of this algorithm is recursive
     :param root: The root of the tree
+    :param queue: Queue to store the children elements to process next
     :return: List with the nodes of the tree in breadth-first order
     """
     elements = []
-    queue = deque()
-    if root.value:
-        elements.append(root.value)
-        queue = __append_left_right(queue, root)
-    return __breadth_first(queue, elements)
+    if not root:
+        return elements
+
+    elements.append(root.value)
+    queue = __append_children_left_to_right(queue, root)
+    if not queue:
+        return elements
+
+    node = queue.popleft()
+    elements.extend(breadth_first_recursive(node, queue))
+    return elements
 
 
 def breadth_first_iterative(root: Node) -> list:
@@ -104,11 +111,11 @@ def breadth_first_iterative(root: Node) -> list:
     elements = [root.value]
 
     queue = deque()
-    queue = __append_left_right(queue, root)
+    queue = __append_children_left_to_right(queue, root)
     while queue:
         node = queue.popleft()
         elements.append(node.value)
-        queue = __append_left_right(queue, node)
+        queue = __append_children_left_to_right(queue, node)
 
     return elements
 
@@ -125,7 +132,7 @@ def __append_children_right_to_left(stack: Deque[Node], root: Node) -> Deque[Nod
     return stack
 
 
-def __append_left_right(queue: Deque[Node], node: Node) -> Deque[Node]:
+def __append_children_left_to_right(queue: Deque[Node], node: Node) -> Deque[Node]:
     """
     Appends node children to the queue and returns the queue.
     :param queue: The queue to append the node's children
@@ -137,14 +144,3 @@ def __append_left_right(queue: Deque[Node], node: Node) -> Deque[Node]:
     if node.right:
         queue.append(node.right)
     return queue
-
-
-def __breadth_first(queue: Deque[Node], elements: list) -> list:
-    if len(queue) == 0:
-        return elements
-
-    node = queue.popleft()
-    if node.value:
-        elements.append(node.value)
-        queue = __append_left_right(queue, node)
-        return __breadth_first(queue, elements)
