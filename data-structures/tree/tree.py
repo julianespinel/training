@@ -10,7 +10,7 @@ class Node:
         self.right = right
 
 
-def pre_order(root: Node, elements: list) -> list:
+def pre_order_recursive(root: Node, elements: list) -> list:
     """
     Returns the elements of the tree traversed pre-order (NLR)
     :param root: The root of the tree
@@ -19,9 +19,29 @@ def pre_order(root: Node, elements: list) -> list:
     """
     elements.append(root.value)
     if root.left:
-        elements = pre_order(root.left, elements)
+        elements = pre_order_recursive(root.left, elements)
     if root.right:
-        elements = pre_order(root.right, elements)
+        elements = pre_order_recursive(root.right, elements)
+
+    return elements
+
+
+def pre_order_iterative(root: Node) -> list:
+    """
+    Returns the elements of the tree traversed pre-order (NLR)
+    :param root: The root of the tree
+    :return: List with the nodes of the tree in pre-order
+    """
+    if not root:
+        return []
+
+    elements = [root.value]
+    stack = deque()
+    stack = __append_right_left(stack, root)
+    while stack:
+        node = stack.pop()
+        elements.append(node.value)
+        stack = __append_right_left(stack, node)
 
     return elements
 
@@ -61,6 +81,21 @@ def post_order(root: Node, elements: list) -> list:
     return elements
 
 
+def breadth_first_recursive(root: Node) -> list:
+    """
+    Returns the elements of the tree traversed in breadth-first order.
+    The implementation of this algorithm is recursive
+    :param root: The root of the tree
+    :return: List with the nodes of the tree in breadth-first order
+    """
+    elements = []
+    queue = deque()
+    if root.value:
+        elements.append(root.value)
+        queue = __append_left_right(queue, root)
+    return __breadth_first(queue, elements)
+
+
 def breadth_first_iterative(root: Node) -> list:
     """
     Returns the elements of the tree traversed in breadth-first order.
@@ -74,31 +109,28 @@ def breadth_first_iterative(root: Node) -> list:
     elements = [root.value]
 
     queue = deque()
-    queue = __append_children(queue, root)
+    queue = __append_left_right(queue, root)
     while queue:
         node = queue.popleft()
         elements.append(node.value)
-        queue = __append_children(queue, node)
+        queue = __append_left_right(queue, node)
 
     return elements
 
 
-def breadth_first_recursive(root: Node) -> list:
-    """
-    Returns the elements of the tree traversed in breadth-first order.
-    The implementation of this algorithm is recursive
-    :param root: The root of the tree
-    :return: List with the nodes of the tree in breadth-first order
-    """
-    elements = []
-    queue = deque()
-    if root.value:
-        elements.append(root.value)
-        queue = __append_children(queue, root)
-    return __breadth_first(queue, elements)
+# -----------------------------------------------------------------------------
+# Private functions
+# -----------------------------------------------------------------------------
+
+def __append_right_left(stack: Deque[Node], root: Node) -> Deque[Node]:
+    if root.right:
+        stack.append(root.right)
+    if root.left:
+        stack.append(root.left)
+    return stack
 
 
-def __append_children(queue, node):
+def __append_left_right(queue: Deque[Node], node: Node) -> Deque[Node]:
     """
     Appends node children to the queue and returns the queue.
     :param queue: The queue to append the node's children
@@ -119,5 +151,5 @@ def __breadth_first(queue: Deque[Node], elements: list) -> list:
     node = queue.popleft()
     if node.value:
         elements.append(node.value)
-        queue = __append_children(queue, node)
+        queue = __append_left_right(queue, node)
         return __breadth_first(queue, elements)
