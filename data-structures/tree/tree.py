@@ -35,11 +35,11 @@ def pre_order_iterative(root: Node) -> list:
 
     elements = [root.value]
     stack = deque()
-    stack = __append_right_left(stack, root)
+    stack = __append_children_right_to_left(stack, root)
     while stack:
         node = stack.pop()
         elements.append(node.value)
-        stack = __append_right_left(stack, node)
+        stack = __append_children_right_to_left(stack, node)
 
     return elements
 
@@ -117,7 +117,7 @@ def breadth_first_iterative(root: Node) -> list:
 # Private functions
 # -----------------------------------------------------------------------------
 
-def __append_right_left(stack: Deque[Node], root: Node) -> Deque[Node]:
+def __append_children_right_to_left(stack: Deque[Node], root: Node) -> Deque[Node]:
     if root.right:
         stack.append(root.right)
     if root.left:
