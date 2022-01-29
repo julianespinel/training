@@ -23,8 +23,11 @@ class TestTree(unittest.TestCase):
 
     def test_traverse_pre_order(self):
         root = get_test_tree()
-        result = tree.pre_order(root, [])
-        self.assertEqual(result, ['f', 'b', 'a', 'd', 'c', 'e', 'g', 'i', 'h'])
+        recursive_result = tree.pre_order_recursive(root, [])
+        self.assertEqual(recursive_result, ['f', 'b', 'a', 'd', 'c', 'e', 'g', 'i', 'h'])
+
+        iterative_result = tree.pre_order_iterative(root)
+        self.assertEqual(iterative_result, ['f', 'b', 'a', 'd', 'c', 'e', 'g', 'i', 'h'])
 
     def test_traverse_in_order(self):
         root = get_test_tree()
@@ -38,8 +41,8 @@ class TestTree(unittest.TestCase):
 
     def test_traverse_breadth_first(self):
         root = get_test_tree()
-        iterative_result = tree.breadth_first_iterative(root)
-        self.assertEqual(iterative_result, ['f', 'b', 'g', 'a', 'd', 'i', 'c', 'e', 'h'])
-
         recursive_result = tree.breadth_first_recursive(root)
         self.assertEqual(recursive_result, ['f', 'b', 'g', 'a', 'd', 'i', 'c', 'e', 'h'])
+
+        iterative_result = tree.breadth_first_iterative(root)
+        self.assertEqual(iterative_result, ['f', 'b', 'g', 'a', 'd', 'i', 'c', 'e', 'h'])
