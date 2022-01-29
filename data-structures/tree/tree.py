@@ -44,37 +44,34 @@ def pre_order_iterative(root: Node) -> list:
     return elements
 
 
-def in_order(root: Node, elements: list) -> list:
+def in_order(root: Node) -> list:
     """
     Returns the elements of the tree traversed in-order (LNR)
     :param root: The root of the tree
-    :param elements: List to accumulate the result
     :return: List with the nodes of the tree in-order
     """
-    if root.left:
-        elements = in_order(root.left, elements)
+    elements = []
+    if not root:
+        return elements
 
+    elements.extend(in_order(root.left))
     elements.append(root.value)
-
-    if root.right:
-        elements = in_order(root.right, elements)
-
+    elements.extend(in_order(root.right))
     return elements
 
 
-def post_order(root: Node, elements: list) -> list:
+def post_order(root: Node) -> list:
     """
     Returns the elements of the tree traversed in post-order (LRN)
     :param root: The root of the tree
-    :param elements: List to accumulate the result
     :return: List with the nodes of the tree in post-order
     """
-    if root.left:
-        elements = post_order(root.left, elements)
+    elements = []
+    if not root:
+        return elements
 
-    if root.right:
-        elements = post_order(root.right, elements)
-
+    elements.extend(post_order(root.left))
+    elements.extend(post_order(root.right))
     elements.append(root.value)
     return elements
 

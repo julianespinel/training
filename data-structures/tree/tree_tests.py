@@ -31,12 +31,12 @@ class TestTree(unittest.TestCase):
 
     def test_traverse_in_order(self):
         root = get_test_tree()
-        result = tree.in_order(root, [])
+        result = tree.in_order(root)
         self.assertEqual(result, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
 
     def test_traverse_post_order(self):
         root = get_test_tree()
-        result = tree.post_order(root, [])
+        result = tree.post_order(root)
         self.assertEqual(result, ['a', 'c', 'e', 'd', 'b', 'h', 'i', 'g', 'f'])
 
     def test_traverse_breadth_first(self):
