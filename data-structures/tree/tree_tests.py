@@ -31,8 +31,11 @@ class TestTree(unittest.TestCase):
 
     def test_traverse_in_order(self):
         root = get_test_tree()
-        result = tree.in_order(root)
-        self.assertEqual(result, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
+        recursive_result = tree.in_order_recursive(root)
+        self.assertEqual(recursive_result, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
+
+        iterative_result = tree.in_order_iterative(root)
+        self.assertEqual(iterative_result, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])
 
     def test_traverse_post_order(self):
         root = get_test_tree()

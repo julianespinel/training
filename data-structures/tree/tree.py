@@ -44,7 +44,7 @@ def pre_order_iterative(root: Node) -> list:
     return elements
 
 
-def in_order(root: Node) -> list:
+def in_order_recursive(root: Node) -> list:
     """
     Returns the elements of the tree traversed in-order (LNR)
     :param root: The root of the tree
@@ -54,9 +54,30 @@ def in_order(root: Node) -> list:
     if not root:
         return elements
 
-    elements.extend(in_order(root.left))
+    elements.extend(in_order_recursive(root.left))
     elements.append(root.value)
-    elements.extend(in_order(root.right))
+    elements.extend(in_order_recursive(root.right))
+    return elements
+
+
+def in_order_iterative(root: Node) -> list:
+    """
+    Returns the elements of the tree traversed in-order (LNR)
+    :param root: The root of the tree
+    :return: List with the nodes of the tree in-order
+    """
+    node = root
+    elements = []
+    stack = deque()
+    while stack or node:
+        if node:
+            stack.append(node)
+            node = node.left
+        else:
+            node = stack.pop()
+            elements.append(node.value)
+            node = node.right
+
     return elements
 
 
