@@ -12,14 +12,15 @@ class reversor:
         return self.value >= other.value
 
 
-tuples = [(3, 'x'), (2, 'y'), (1, 'a'), (1, 'z')]
+if __name__ == '__main__':
+    tuples = [(3, 'x'), (2, 'y'), (1, 'a'), (1, 'z')]
 
-tuples.sort(key=lambda x: (x[0], x[1]))
-assert tuples == [(1, 'a'), (1, 'z'), (2, 'y'),(3, 'x')], "Error 1: 0 asc, 1 asc"
+    tuples.sort(key=lambda x: (x[0], x[1]))
+    assert tuples == [(1, 'a'), (1, 'z'), (2, 'y'),(3, 'x')], "Error 1: 0 asc, 1 asc"
 
-tuples.sort(key=lambda x: (x[0], reversor(x[1])))
-assert tuples == [(1, 'z'), (1, 'a'), (2, 'y'),(3, 'x')], "Error 2: 0 asc, 1 desc"
+    tuples.sort(key=lambda x: (x[0], reversor(x[1])))
+    assert tuples == [(1, 'z'), (1, 'a'), (2, 'y'),(3, 'x')], "Error 2: 0 asc, 1 desc"
 
-# The following approach works for a single char string.
-tuples.sort(key=lambda x: (x[0], -ord(x[1])))
-assert tuples == [(1, 'z'), (1, 'a'), (2, 'y'), (3, 'x')], "Error 3: 0 asc, 1 desc"
+    # The following approach works for a single char string.
+    tuples.sort(key=lambda x: (x[0], -ord(x[1])))
+    assert tuples == [(1, 'z'), (1, 'a'), (2, 'y'), (3, 'x')], "Error 3: 0 asc, 1 desc"
